@@ -1,0 +1,92 @@
+\documentclass{cup-ino}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{algorithm, algorithmic, algpseudocode}
+\usepackage{blindtext,alltt}
+%% Full title
+\title{Exploring Automatic Hyperparameter Tuning for Model Selection in Machine Learning}
+
+%% Shorter title, for use in page header
+\runningtitle{Automatic H-Tuning}
+\author{Bosco Ndemeye}
+% \author{Anon Authorone and Anon Authortwo}
+
+%% The .bib file containing reference entires, for use with biblatex. CUP-INO loads the biblatex-chicago package with customisations for INO.
+\addbibresource{refs.bib}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Besides the choice of classifier, the choice of hyperparameter settings is another step in the machine learning pipeline that varies from problem to problem. With a hypothesis in mind, data scientists settle on well tuned hyperparameter settings that perform the best on their development data. It is often the case that the choice of hyperparameter setting settled on, is one among many such settings manually tuned in advance. In this paper, we explore whether such manual tuning  is necessary. We present an approach through which a search space of hyperparameter settings can established, then used in the learning pipeline or by a search algorithm to find the optimal setting. Using a film recommendation problem as an example, we use the KNN algorithm, the perceptron algorithm, the linear regression algorithm, as well as decision trees to demonstrate how what we propose can be done. Using a dataset provided by Kaggle, all investigated models produce around the same accuracy for their respective optimal model. 
+\end{abstract}
+
+\section{Introduction}
+
+A function, in the programming sense of the world, can be thought to be a machine which, given an input, will produce a `corresponding' output. Some functions are easier to write than others. In a similar vain, machine learning can be thought to be the process of concocting functions from large amounts of data. Given a big pool of data, \textit{classifiers} produce a machine such that, given a certain input, the machine will produce an appropriately corresponding output. Given data, the modern machine learning pipeline can be summarized as follows:
+
+\begin{itemize}
+    \item Normalize the data
+    \item Partition the data 
+    \begin{itemize}
+        \item 70\% training data \item 20\% development data 
+        \item 10\% test data
+    \end{itemize}
+    \item Choose a learning algorithm
+    \item \textbf{Choose hyperparameter settings for said algorithm}
+    \item For each hyper parameter setting
+    \begin{itemize}
+        \item Train a model using that setting over training data
+        \item Compute the error rate of the model with development data
+    \end{itemize}
+    \item Pick the model with the smallest error rate on development data
+    \item Evaluate this model on test data to estimate future performance
+\end{itemize}
+Each step in the pipeline requires careful thought on the part of the data scientist, some steps more than others. In this paper we focus on \textbf{choosing hyperparameter settings}.
+
+A hyperparameter of a machine learning model is used to control how much ``learning" the model has done. Sometimes a model has learnt too much from the data used to train it, but will do poorly on unseen data; other times it has learned too little. The former scenario is known as \textit{overfitting}, while the latter is known as \textit{underfitting}. Therefore, the data scientist needs to understand their algorithm/classifier well enough to be able to make choices of hyperparameter settings that will benefit the performance of their model while avoiding overfitting or underfitting. The process of adjusting hyperparameter settings is known as \textit{tuning}.
+
+Data scientists are programmers however, and among many others, the job of the programmer is to recognize tasks that can be automated and use skills in their toolbox to do so. Hyperparameter tuning seems to be such a job. If a search space of hyperparameter settings for a given algorithm can be set up, optimization methods can be used to track and find the optimal setting for a given task. In this paper, we explore a technique to generate such a space, and find the ``right" model. We use the KNN algorithm, the perceptron algorithm, the linear regression algorithm, as well as the decision tree algorithms while applying them to a film recommendation problem to illustrate our process.
+
+\section{Background}
+
+\section{Methods}
+The scikit-learn package provides all classifiers we considered. Hyperparameters along with other parameters are provided to constructors of classifier objects the package provides. Consequently, for each algorithm, and for each of its hyper-parameter type, we generate a range values, which we use to construct appropriate scikit-learn objects. The collection of objects obtained through that process is thus treated as our search space and used to find an optimal model for our algorithm.
+
+\begin{algorithm}
+  \caption{Finding Optimal Model}\label{euclid}
+  \begin{algorithmic}[1]
+    \Procedure{FindModel}{$alg, train_x, train_y, dev_x, dev_y, test_x, test_y$}
+      \State $settings\gets genSettings(alg)$
+      \State $models \gets \phi $
+      \For{\texttt{$s \in settings$}}
+        \State $classifier \gets  makeModel(s)$
+        \State $models \gets models \cup \{ classifier \}$
+      \EndFor
+      
+      \For{\texttt{$s \in settings$}}
+        \State $classifier \gets  makeModel(s)$
+        \State $models \gets models \cup \{ classifier \}$
+      \EndFor
+      
+      \State $scores \gets \phi$
+      \State $main_{model} \gets (\textbf{zero_{m}}, 0)$
+      
+      \For{\texttt{$s \in settings$}}
+        \State $classifier \gets  makeModel(s)$
+        \State $models \gets models \cup \{ classifier \}$
+      \EndFor
+      
+      
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{K-Nearest neighbors}
+
+\section{Experiments}
+
+\section{Conclusion}
+
+\end{document}
